@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TimeAttendence2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TestCheckedTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fullname" Type="nchar" MaxLength="40" />
+          <Property Name="email" Type="nchar" MaxLength="20" />
+          <Property Name="date_at" Type="date" />
+          <Property Name="checkin_at" Type="datetime" />
+        </EntityType>
+        <Function Name="GetDailyRecordssp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="days" Type="date" Mode="In" />
+        </Function>
+        <Function Name="GetMonthsRecordssp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="month" Type="int" Mode="In" />
+          <Parameter Name="year" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TimeAttendence2ModelStoreContainer">
+          <EntitySet Name="TestCheckedTime" EntityType="Self.TestCheckedTime" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TimeAttendence2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TimeAttendence2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TestCheckedTimes" EntityType="TimeAttendence2Model.TestCheckedTime" />
+          <FunctionImport Name="GetDailyRecordssp" ReturnType="Collection(TimeAttendence2Model.GetDailyRecordssp_Result)">
+            <Parameter Name="days" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetMonthsRecordssp" ReturnType="Collection(TimeAttendence2Model.GetMonthsRecordssp_Result)">
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetFunctionDay" EntitySet="TestCheckedTimes" ReturnType="Collection(TimeAttendence2Model.TestCheckedTime)">
+            <Parameter Name="days" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetFunctionMonth" EntitySet="TestCheckedTimes" ReturnType="Collection(TimeAttendence2Model.TestCheckedTime)">
+            <Parameter Name="month" Mode="In" Type="Int32" />
+            <Parameter Name="year" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="TestCheckedTime">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fullname" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="date_at" Type="DateTime" Precision="0" />
+          <Property Name="checkin_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <ComplexType Name="GetDailyRecordssp_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="fullname" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="date_at" Nullable="true" />
+          <Property Type="DateTime" Name="checkin_at" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="GetMonthsRecordssp_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="fullname" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="date_at" Nullable="true" />
+          <Property Type="DateTime" Name="checkin_at" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TimeAttendence2ModelStoreContainer" CdmEntityContainer="TimeAttendence2Entities">
+          <EntitySetMapping Name="TestCheckedTimes">
+            <EntityTypeMapping TypeName="TimeAttendence2Model.TestCheckedTime">
+              <MappingFragment StoreEntitySet="TestCheckedTime">
+                <ScalarProperty Name="checkin_at" ColumnName="checkin_at" />
+                <ScalarProperty Name="date_at" ColumnName="date_at" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDailyRecordssp" FunctionName="TimeAttendence2Model.Store.GetDailyRecordssp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TimeAttendence2Model.GetDailyRecordssp_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="date_at" ColumnName="date_at" />
+                <ScalarProperty Name="checkin_at" ColumnName="checkin_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMonthsRecordssp" FunctionName="TimeAttendence2Model.Store.GetMonthsRecordssp">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TimeAttendence2Model.GetMonthsRecordssp_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="date_at" ColumnName="date_at" />
+                <ScalarProperty Name="checkin_at" ColumnName="checkin_at" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFunctionDay" FunctionName="TimeAttendence2Model.Store.GetDailyRecordssp" />
+          <FunctionImportMapping FunctionImportName="GetFunctionMonth" FunctionName="TimeAttendence2Model.Store.GetMonthsRecordssp" />
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

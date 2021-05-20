@@ -1,0 +1,157 @@
+﻿@model IEnumerable<TimeAttendence.Models.TestCheckedTime>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Employee Month";
+    if (Session["username"] == null)
+    {
+        Response.Redirect("~/LoginAccount/Login");
+    }
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/table2csv.js"></script>
+    <title>@ViewBag.Title</title>
+
+    @section scripts
+    {
+
+        <script type="text/javascript" charset="utf-8">
+            $('#exportCSV').click(function () {
+                $("#myTable").table2csv({
+                    separator: ',',
+                    newline: '\n',
+                    filename: 'ReportTimeAttendence.csv'
+                });
+            });
+
+
+        
+
+        </script>
+
+    }
+
+    <style>
+
+        .topcontainer, .tablecontainer {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 5px 10px 5px #f3f3f3 ;
+            border-radius: 25px;
+        }
+
+        .btn { width: 3cm;}
+
+        th {font-size: 18px;}
+
+    </style>
+
+</head>
+
+<body style="background-color: #f6f6f6;">
+
+    @using (Html.BeginForm("viewEmployeeMonth", "Employee", FormMethod.Post))
+    {
+        <h2><label>Time Attendance :</label> @DateTime.Now.ToString("MMMM , yyyy")</h2><br />
+        <div class="container topcontainer">
+            <form>
+                <div class="row">
+                    <div class="form-group col-xs-2">
+                        <label class="invisible-label">&nbsp;</label>
+                        <div class="dropdown">
+                            <label>Select:&nbsp;&nbsp;&nbsp;</label>
+                            <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" style="width: 2.5cm;">
+                                Month of
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="viewEmployeeDay">Day</a></li>
+                                <li><a href="viewEmployeeMonth">Month</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label class="invisible-label">&nbsp;</label>
+                        <select class="form-control" name="month" id="selected">
+                            <option disabled selected hidden value="">select month</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label class="invisible-label">&nbsp;</label>
+                        <select class="form-control" id="selectedAll" name="year">
+                            <option selected>@DateTime.Now.Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label class="invisible-label">&nbsp;</label>
+                        <button type="submit" class="btn btn-primary" id="btnSearch">Search</button>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label class="invisible-label">&nbsp;</label>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <label class="invisible-label">&nbsp;</label>
+                        <button id="exportCSV" class="btn btn-success" style="float: right;">Export to CSV</button>
+                    </div>
+                </div>
+            </form>
+            <div id="result"></div>
+        </div>
+    }
+    <br>
+
+
+    <div class="container mb-3 mt-3 tablecontainer">
+        <table id="myTable" class="table  table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Checked In</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fullname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.date_at).ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            @Convert.ToDateTime(item.checkin_at).ToString("hh:mm:ss tt")
+                        </td>
+                    </tr>
+                }
+            <tbody>
+        </table>
+    </div><br><br>
+</body>
+</html>
+

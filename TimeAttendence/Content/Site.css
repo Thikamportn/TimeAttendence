@@ -1,0 +1,106 @@
+﻿body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+img {
+    width: 400px;
+    height: 400px;
+    margin-top: 50px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
+
+#box {
+    width: 500px;
+    height: 500px;
+    background: white;
+    margin: 0px auto;
+    border-radius: 50px;
+}
+
+#qrcode {
+    display: table;
+    margin: 0px auto;
+}
+
+#text-2 {
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    padding: 20px;
+}
+
+.invisible-label {
+    visibility: hidden;
+    display: block;
+}
+
+
+/*navbar*/
+#mainbox {
+    font-size: 24px;
+    cursor: pointer;
+    transition: all .6s;
+    padding: 10px 10px 0px 25px;
+    color: #ff9231;
+}
+
+.sidemenu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 0px;
+    background-color: #222;
+    z-index: 1;
+    padding-top: 100px;
+    overflow-x: hidden;
+    transition: all .5s;
+}
+
+.sidemenu a {
+    padding: 8px 8px 8px 64px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #999;
+    display: block;
+}
+
+.sidemenu a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.sidemenu .closebtn {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 32px;
+}

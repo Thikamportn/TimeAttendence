@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+<body>
+    <div id="mainbox" onclick="openFunction()">&#9776;</div>
+    <div id="menu" class="sidemenu">
+
+        @if (Session["username"] != null)
+        {
+            @Html.ActionLink("Logout", "Logout", "LoginAccount")
+        }
+        else
+        {
+            @Html.ActionLink("Scan QRCode", "Index", "Home")
+            @Html.ActionLink("Login", "Login", "LoginAccount")
+        }
+
+        <a href="#" class="closebtn" onclick="closeFunction()">&times;</a>
+    </div>
+
+    <script type="text/javascript">
+        function openFunction() {
+            document.getElementById("menu").style.width = "300px";
+            document.getElementById("mainbox").style.marginLeft = "300px";
+        }
+        function closeFunction() {
+            document.getElementById("menu").style.width = "0px";
+            document.getElementById("mainbox").style.marginLeft = "0px";
+        }
+    </script>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
