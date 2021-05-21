@@ -28,8 +28,10 @@ namespace TimeAttendence.Controllers
         [HttpPost]
         public ActionResult viewEmployeeDay(DateTime? days)
         {
-            //SELECT * FROM [dbo].[TestCheckedTime] WHERE date_at LIKE @day 
-            return View("viewEmployeeDay", db.GetFunctionDay(days));
+            //SELECT * FROM [dbo].[TestCheckedTime] WHERE date_at LIKE @day
+            var date = db.GetFunctionDay(days);
+            var dateInAscOrder = date.OrderBy(d => d.checkin_at);
+            return View("viewEmployeeDay", dateInAscOrder);
         }
 
 
@@ -49,7 +51,9 @@ namespace TimeAttendence.Controllers
         public ActionResult viewEmployeeMonth(int? month, int? year)
         {
             //SELECT * FROM [dbo].[TestCheckedTime] WHERE MONTH(date_at) LIKE @month AND YEAR(date_at) LIKE @year
-            return View("viewEmployeeMonth", db.GetFunctionMonth(month, year));
+            var date = db.GetFunctionMonth(month, year);
+            var dateInAscOrder = date.OrderBy(d => d.date_at);
+            return View("viewEmployeeMonth", dateInAscOrder);
         }
 
     }
